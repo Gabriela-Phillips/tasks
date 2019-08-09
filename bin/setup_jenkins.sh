@@ -7,19 +7,34 @@ if [ "$#" -ne 3 ]; then
     exit 1
 fi
 
-GUID=$1
-REPO=$2
-CLUSTER=$3
+GUID=8550
+REPO=https://github.com/Gabriela-Phillips/tasks/openshift-tasks.git
+CLUSTER=na311.openshift.opentlc.com
+
 echo "Setting up Jenkins in project ${GUID}-jenkins from Git Repo ${REPO} for Cluster ${CLUSTER}"
 
 # Set up Jenkins with sufficient resources
-# TBD
+# 1 -- set up Jenkins instance
+
+oc new-app jenkins-persistent --param ENABLE_OAUTH=true --param MEMORY_LIMIT=4Gi --param VOLUME_CAPACITY=8Gi --param DISABLE_ADMINISTRATIVE_MONITORS=true
+
+oc set resources dc jenkins --limits=memory=2Gi,cpu=2 --requests=memory=1Gi,cpu=500m
+
+oc get pods
 
 # Create custom agent container image with skopeo
-# TBD
+
+oc new-build -D $'FROM docker.io/openshift/jenkins-agent-maven-35-centos7:v3.11\n
+USER root\nRUN yum -y install skopeo && yum clean all\n
+USER 1001' --name=jenkins-agent-appdev --context-dir=https://github.com/Gabriela-Phillips/tasks/openshift-tasks.git
 
 # Create pipeline build config pointing to the ${REPO} with contextDir `openshift-tasks`
-# TBD
+
+oc set env jenkins-agent-appdev GUID=8550
+oc set env jenkins-agent-appdev REPO=https://github.com/Gabriela-Phillips/tasks.git
+oc set env jenkins-agent-appdev CLUSTER=na311.openshift.opentlc.com
+
+oc patch bc jenkins-agent-appdev -p '{"spec":{"source":{"contextDir":"/openshift-tasks"}}}'
 
 # Make sure that Jenkins is fully up and running before proceeding!
 while : ; do
