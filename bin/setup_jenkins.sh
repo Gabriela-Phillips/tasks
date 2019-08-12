@@ -18,6 +18,12 @@ echo "Setting up Jenkins in project ${GUID}-jenkins from Git Repo ${REPO} for Cl
 # 1 -- set up Jenkins instance
 
 oc get project ${GUID}-jenkins
+
+echo "var Set"
+oc set env bc --all GUID=8550
+oc set env bc --all REPO=https://github.com/Gabriela-Phillips/tasks/openshift-tasks.git
+oc set env bc --all CLUSTER=na311.openshift.opentlc.com
+
 echo "Project Retrieved"
 oc new-app jenkins-persistent --param ENABLE_OAUTH=true --param MEMORY_LIMIT=4Gi --param VOLUME_CAPACITY=8Gi --param DISABLE_ADMINISTRATIVE_MONITORS=true
 
@@ -32,10 +38,6 @@ USER root\nRUN yum -y install skopeo && yum clean all\n
 USER 1001' --name=jenkins-agent-appdev --context-dir=https://github.com/Gabriela-Phillips/tasks/openshift-tasks.git
 
 # Create pipeline build config pointing to the ${REPO} with contextDir `openshift-tasks`
-echo "var Set"
-oc set env bc --all GUID=8550
-oc set env bc --all REPO=https://github.com/Gabriela-Phillips/tasks/openshift-tasks.git
-oc set env bc --all CLUSTER=na311.openshift.opentlc.com
 
 oc patch bc jenkins-agent-appdev -p '{"spec":{"source":{"contextDir":"/openshift-tasks"}}}'
 echo "Patch executed."
