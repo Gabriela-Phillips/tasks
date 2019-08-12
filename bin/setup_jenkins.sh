@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # Setup Jenkins Project
 if [ "$#" -ne 3 ]; then
     echo "Usage:"
@@ -16,6 +17,8 @@ echo "Setting up Jenkins in project ${GUID}-jenkins from Git Repo ${REPO} for Cl
 # Set up Jenkins with sufficient resources
 # 1 -- set up Jenkins instance
 
+oc get project ${GUID}-jenkins
+echo "Project Retrieved"
 oc new-app jenkins-persistent --param ENABLE_OAUTH=true --param MEMORY_LIMIT=4Gi --param VOLUME_CAPACITY=8Gi --param DISABLE_ADMINISTRATIVE_MONITORS=true
 
 oc set resources dc jenkins --limits=memory=2Gi,cpu=2 --requests=memory=1Gi,cpu=500m
