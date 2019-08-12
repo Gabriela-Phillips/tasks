@@ -34,7 +34,7 @@ USER 1001' --name=jenkins-agent-appdev --context-dir=https://github.com/Gabriela
 # Create pipeline build config pointing to the ${REPO} with contextDir `openshift-tasks`
 echo "var Set"
 oc set env bc --all GUID=8550
-oc set env bc --all REPO=https://github.com/Gabriela-Phillips/tasks.git
+oc set env bc --all REPO=https://github.com/Gabriela-Phillips/tasks/openshift-tasks.git
 oc set env bc --all CLUSTER=na311.openshift.opentlc.com
 
 oc patch bc jenkins-agent-appdev -p '{"spec":{"source":{"contextDir":"/openshift-tasks"}}}'
