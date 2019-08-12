@@ -8,7 +8,7 @@ if [ "$#" -ne 3 ]; then
 fi
 
 GUID=8550
-REPO=https://github.com/Gabriela-Phillips/tasks/openshift-tasks.git
+REPO=https://github.com/Gabriela-Phillips/tasks.git
 CLUSTER=na311.openshift.opentlc.com
 
 echo "Setting up Jenkins in project ${GUID}-jenkins from Git Repo ${REPO} for Cluster ${CLUSTER}"
