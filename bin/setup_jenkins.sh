@@ -27,7 +27,7 @@ oc set resources dc jenkins --limits=memory=2Gi,cpu=2 --requests=memory=1Gi,cpu=
 
 echo "var Set"
 oc set env bc --all GUID=8550
-oc set env bc --all REPO=https://github.com/Gabriela-Phillips/tasks.git
+oc set env bc --all REPO=https://github.com/Gabriela-Phillips/tasks/openshift-tasks.git
 oc set env bc --all CLUSTER=na311.openshift.opentlc.com
 
 # Create custom agent container image with skopeo
