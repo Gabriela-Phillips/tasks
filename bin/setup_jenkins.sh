@@ -19,17 +19,16 @@ echo "Setting up Jenkins in project ${GUID}-jenkins from Git Repo ${REPO} for Cl
 
 oc get project ${GUID}-jenkins
 
-echo "var Set"
-oc set env bc --all GUID=8550
-oc set env bc --all REPO=https://github.com/Gabriela-Phillips/tasks/openshift-tasks.git
-oc set env bc --all CLUSTER=na311.openshift.opentlc.com
-
 echo "Project Retrieved"
+
 oc new-app jenkins-persistent --param ENABLE_OAUTH=true --param MEMORY_LIMIT=4Gi --param VOLUME_CAPACITY=8Gi --param DISABLE_ADMINISTRATIVE_MONITORS=true --name='jenkins'
 
 oc set resources dc jenkins --limits=memory=2Gi,cpu=2 --requests=memory=1Gi,cpu=500m
 
-oc get pods
+echo "var Set"
+oc set env bc --all GUID=8550
+oc set env bc --all REPO=https://github.com/Gabriela-Phillips/tasks.git
+oc set env bc --all CLUSTER=na311.openshift.opentlc.com
 
 # Create custom agent container image with skopeo
 echo "build from Skopeo"
@@ -41,7 +40,8 @@ USER 1001' --name=jenkins-agent-appdev --context-dir=https://github.com/Gabriela
 
 oc patch bc jenkins-agent-appdev -p '{"spec":{"source":{"contextDir":"tasks/openshift-tasks"}}}'
 echo "Patch executed."
-
+oc get dc
+echo "DC Command Run
 oc get dc jenkins -n ${GUID}-jenkins -o=json
 oc get dc jenkins -n ${GUID}-jenkins -o=jsonpath='{.status.availableReplicas}'
 
