@@ -40,19 +40,21 @@ oc patch bc jenkins-agent-appdev -p '{"spec":{"source":{"contextDir":"tasks/open
 echo "Patch executed."
 oc get dc
 echo "DC Command Run"
+echo "Guid currently is: ${GUID}"
+oc get dc jenkins -n 8550-jenkins -o=json
+oc get dc jenkins -n 8550-jenkins -o=jsonpath='{.status.availableReplicas}'
 oc get dc jenkins -n ${GUID}-jenkins -o=json
 oc get dc jenkins -n ${GUID}-jenkins -o=jsonpath='{.status.availableReplicas}'
-
 # Make sure that Jenkins is fully up and running before proceeding!
-#while : ; do
-#  echo "Checking if Jenkins is Ready..."
-#  AVAILABLE_REPLICAS=$(oc get dc jenkins -n ${GUID}-jenkins -o=jsonpath='{.status.availableReplicas}')
-#  echo ${AVAILABLE_REPLICAS}
-#  if [[ "$AVAILABLE_REPLICAS" == "1" ]]; then
-#    echo "...Yes. Jenkins is ready."
-#    break
-#  fi
-#  echo "...no. Sleeping 10 seconds."
- # echo "${AVAILABLE_REPLICAS}"
-  #sleep 10
-#done
+while : ; do
+  echo "Checking if Jenkins is Ready..."
+  AVAILABLE_REPLICAS=$(oc get dc jenkins -n ${GUID}-jenkins -o=jsonpath='{.status.availableReplicas}')
+  echo ${AVAILABLE_REPLICAS}
+  if [[ "$AVAILABLE_REPLICAS" == "1" ]]; then
+    echo "...Yes. Jenkins is ready."
+    break
+  fi
+  echo "...no. Sleeping 10 seconds."
+  echo "${AVAILABLE_REPLICAS}"
+  sleep 10
+done
