@@ -41,10 +41,15 @@ USER 1001' --name=jenkins-agent-appdev --context-dir=https://github.com/Gabriela
 
 oc patch bc jenkins-agent-appdev -p '{"spec":{"source":{"contextDir":"/openshift-tasks"}}}'
 echo "Patch executed."
+
+oc get dc jenkins -n ${GUID}-jenkins -o=json
+oc get dc jenkins -n ${GUID}-jenkins -o=jsonpath='{.status.availableReplicas}'
+
 # Make sure that Jenkins is fully up and running before proceeding!
 while : ; do
   echo "Checking if Jenkins is Ready..."
   AVAILABLE_REPLICAS=$(oc get dc jenkins -n ${GUID}-jenkins -o=jsonpath='{.status.availableReplicas}')
+  echo $AVAILABLE_REPLICAS
   if [[ "$AVAILABLE_REPLICAS" == "1" ]]; then
     echo "...Yes. Jenkins is ready."
     break
