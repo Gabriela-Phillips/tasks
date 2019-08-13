@@ -39,7 +39,7 @@ USER 1001' --name=jenkins-agent-appdev --context-dir=https://github.com/Gabriela
 
 # Create pipeline build config pointing to the ${REPO} with contextDir `openshift-tasks`
 
-oc patch bc jenkins-agent-appdev -p '{"spec":{"source":{"contextDir":"/openshift-tasks"}}}'
+oc patch bc jenkins-agent-appdev -p '{"spec":{"source":{"contextDir":"app/openshift-tasks"}}}'
 echo "Patch executed."
 
 oc get dc jenkins -n ${GUID}-jenkins -o=json
@@ -55,5 +55,6 @@ while : ; do
     break
   fi
   echo "...no. Sleeping 10 seconds."
+  echo "${AVAILABLE_REPLICAS}"
   sleep 10
 done
