@@ -40,11 +40,11 @@ oc patch bc jenkins-agent-appdev -p '{"spec":{"source":{"contextDir":"tasks/open
 echo "Patch executed."
 oc get dc
 echo "DC Command Run"
-echo "Guid currently is: ${GUID}"
-oc get dc jenkins -n 8550-jenkins -o=json
-oc get dc jenkins -n 8550-jenkins -o=jsonpath='{.status.availableReplicas}'
-oc get dc jenkins -n ${GUID}-jenkins -o=json
-oc get dc jenkins -n ${GUID}-jenkins -o=jsonpath='{.status.availableReplicas}'
+#echo "Guid currently is: ${GUID}"
+#oc get dc jenkins -n 8550-jenkins -o=json
+#oc get dc jenkins -n 8550-jenkins -o=jsonpath='{.status.availableReplicas}'
+#oc get dc jenkins -n ${GUID}-jenkins -o=json
+#oc get dc jenkins -n ${GUID}-jenkins -o=jsonpath='{.status.availableReplicas}'
 
 oc echo "Getting project..."
 echo (oc get project)
