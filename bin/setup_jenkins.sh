@@ -47,7 +47,7 @@ echo "DC Command Run"
 #oc get dc jenkins -n ${GUID}-jenkins -o=jsonpath='{.status.availableReplicas}'
 
 echo "Getting project..."
-oc get project
+oc get project ${GUID}-jenkins
 echo "Project Gotten"
 # Make sure that Jenkins is fully up and running before proceeding!
 while : ; do
