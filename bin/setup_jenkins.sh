@@ -36,19 +36,25 @@ USER 1001' --name=jenkins-agent-appdev --context-dir=https://github.com/Gabriela
 
 # Create pipeline build config pointing to the ${REPO} with contextDir `openshift-tasks`
 
-oc patch bc jenkins-agent-appdev -p '{"spec":{"source":{"contextDir":"tasks/openshift-tasks"}}}'
-echo "Patch executed."
-oc get dc
-echo "DC Command Run"
-#echo "Guid currently is: ${GUID}"
-#oc get dc jenkins -n 8550-jenkins -o=json
-#oc get dc jenkins -n 8550-jenkins -o=jsonpath='{.status.availableReplicas}'
-#oc get dc jenkins -n ${GUID}-jenkins -o=json
-#oc get dc jenkins -n ${GUID}-jenkins -o=jsonpath='{.status.availableReplicas}'
+echo "apiVersion: v1
+items:
+- kind: "BuildConfig"
+  apiVersion: "v1"
+  metadata:
+    name: "tasks-pipeline"
+  spec:
+    source:
+      type: "Git"
+      git:
+        uri: "https://github.com/Gabriela-Phillips/tasks"
+      contextDir: openshift-tasks/
+    strategy:
+      type: "JenkinsPipeline"
+      jenkinsPipelineStrategy:
+        jenkinsfilePath: Jenkinsfile
+kind: List
+metadata: []" | oc create -f - -n ${GUID}-jenkins
 
-echo "Getting project..."
-oc get project ${GUID}-jenkins
-echo "Project Gotten"
 # Make sure that Jenkins is fully up and running before proceeding!
 while : ; do
   echo "Checking if Jenkins is Ready..."
