@@ -1,4 +1,5 @@
-#!groovy
+
+vy
 podTemplate(
   label: "skopeo-pod",
   cloud: "openshift",
@@ -31,8 +32,7 @@ podTemplate(
       // be accessible from other stages.
       // Extract version from the pom.xml
       def version = getVersionFromPom("pom.xml")
-      def devProject = "${GUID}-jenkins-dev"
-      def prodProject = "${GUID}-jenkins-prod"
+
       //Set the tag for the development image: version + build number**
       def devTag  = "${version}" + currentBuild.number
       // Set the tag for the production image: version
@@ -98,7 +98,7 @@ podTemplate(
         //Deploy to development Project**
         script{
             //Set Image**
-            openshift.set("image", "dc/tasks", "tasks=image-registry.openshift-image-registry.svc:5000/${devProject}/tasks:${devTag}")
+            openshift.set("image", "dc/tasks", "tasks=image-registry.openshift-image-registry.svc:5000/${GUID}-jenkins/tasks:${devTag}")
             //Set Version**
             echo "Setting the Version:"
             version = '${devTag} (tasks-dev)'
@@ -119,13 +119,13 @@ podTemplate(
 
         //Copy image to Nexus container registry**
         echo "Copy image to Nexus Docker Registry:"
-        sh "skopeo copy --src-tls-verify=false --dest-tls-verify=false --src-creds openshift:\$(oc whoami -t) --dest-creds admin:b7e39788-b7fd-49bb-9a10-253e6a515af0 docker://image-registry.openshift-image-registry.svc:5000/${devProject}/tasks:${devTag} docker://https://nexus3-registry.gpte-hw-cicd.svc.cluster.local:5000/tasks:${devTag}"
+        sh "skopeo copy --src-tls-verify=false --dest-tls-verify=false --src-creds openshift:\$(oc whoami -t) --dest-creds admin:b7e39788-b7fd-49bb-9a10-253e6a515af0 docker://image-registry.openshift-image-registry.svc:5000/${GUID}-jenkins/tasks:${devTag} docker://https://nexus3-registry.gpte-hw-cicd.svc.cluster.local:5000/tasks:${devTag}"
 
 
         // Tag the built image with the production tag**
         openshift.withCluster() {
             openshift.withProject("${prodProject}") {
-                openshift.tag("${devProject}/tasks:${devTag}", "${devProject}/tasks:${prodTag}")
+                openshift.tag("${GUID}-jenkins/tasks:${devTag}", "${GUID}-jenkins/tasks:${prodTag}")
             }
         }
     }
@@ -147,7 +147,7 @@ podTemplate(
             destApp = "tasks-green"
             version = '${prodTag} (tasks-green)'
         }
-        openshift.set("image", "dc/tasks", "tasks=docker-registry.default.svc:5000/${devProject}/tasks:${devTag}")
+        openshift.set("image", "dc/tasks", "tasks=docker-registry.default.svc:5000/${GUID}-jenkins/tasks:${devTag}")
         echo "Active Application: " + activeApp
         echo "Destination Application: " + destApp
         //      Deploy into the other application**
