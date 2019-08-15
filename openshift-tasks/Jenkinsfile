@@ -1,5 +1,4 @@
-
-vy
+#!groovy
 podTemplate(
   label: "skopeo-pod",
   cloud: "openshift",
@@ -32,12 +31,14 @@ podTemplate(
       // be accessible from other stages.
       // Extract version from the pom.xml
       def version = getVersionFromPom("pom.xml")
-
       //Set the tag for the development image: version + build number**
       def devTag  = "${version}" + currentBuild.number
       // Set the tag for the production image: version
       def prodTag = "${version}"
       def GUID = "573d" 
+      //Set values for projects...
+      def devProject = "${GUID}-jenkins-dev"
+      def prodProject = "${GUID}-jenkins-prod"
       // Using Maven build the war file
       // Do not run tests in this step
       stage('Build war') {
