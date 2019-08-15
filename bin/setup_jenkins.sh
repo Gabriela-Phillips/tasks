@@ -8,7 +8,7 @@ if [ "$#" -ne 3 ]; then
     exit 1
 fi
 
-GUID=8550
+GUID=573d
 REPO=https://github.com/Gabriela-Phillips/tasks.git
 CLUSTER=na311.openshift.opentlc.com
 
@@ -19,7 +19,7 @@ echo "Setting up Jenkins in project ${GUID}-jenkins from Git Repo ${REPO} for Cl
 
 oc get project ${GUID}-jenkins
 echo "var Set"
-oc set env bc --all GUID=8550
+oc set env bc --all GUID=573d
 oc set env bc --all REPO=https://github.com/Gabriela-Phillips/tasks/openshift-tasks.git
 oc set env bc --all CLUSTER=na311.openshift.opentlc.com
 echo "Project Retrieved"
