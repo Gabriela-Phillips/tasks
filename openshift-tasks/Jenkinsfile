@@ -84,7 +84,7 @@ podTemplate(
         script{
             openshift.withCluster() {
                 openshift.withProject("${devProject}"){
-                    openshift.selector("bc", tasks).startBuild("--from-file=./target/openshift-tasks.war", "--wait=true",)
+                    openshift.selector("bc", tasks-pipeline).startBuild("--from-file=./target/openshift-tasks.war", "--wait=true",)
                     openshift.tags("tasks:latest", "tasks:${devTag}")
                 }
             }
