@@ -97,7 +97,7 @@ podTemplate(
         //Deploy to development Project**
         script{
             //Set Image**
-            openshift.set("image", "tasks", "tasks=image-registry.openshift-image-registry.svc:5000/${GUID}-jenkins/tasks:${devTag}")
+            openshift.set("image", "dc/tasks", "tasks=image-registry.openshift-image-registry.svc:5000/${GUID}-jenkins/tasks:${devTag}")
             //Set Version**
             echo "Setting the Version:"
             version = '${devTag} (tasks-dev)'
@@ -146,7 +146,7 @@ podTemplate(
             destApp = "tasks-green"
             version = '${prodTag} (tasks-green)'
         }
-        openshift.set("image", "dc/tasks", "tasks=docker-registry.default.svc:5000/${devProject}/tasks:${devTag}")
+        openshift.set("image", "dc/tasks", "tasks=docker-registry.default.svc:5000/${GUID}-jenkins/tasks:${devTag}")
         echo "Active Application: " + activeApp
         echo "Destination Application: " + destApp
         //      Deploy into the other application**
