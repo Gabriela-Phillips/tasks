@@ -36,7 +36,7 @@ podTemplate(
       def devTag  = "${version}" + currentBuild.number
       // Set the tag for the production image: version
       def prodTag = "${version}"
-
+      def GUID = "573d" 
       // Using Maven build the war file
       // Do not run tests in this step
       stage('Build war') {
