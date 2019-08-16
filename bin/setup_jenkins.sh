@@ -41,19 +41,26 @@ items:
 - kind: "BuildConfig"
   apiVersion: "v1"
   metadata:
-    name: "tasks-pipe"
+    name: "tasks-pipeline"
   spec:
     source:
       type: "Git"
       git:
         uri: "https://github.com/Gabriela-Phillips/tasks.git"
         ref: "master"
-      contextDir: "tasks/openshift-tasks/"
+      contextDir: "/openshift-tasks"
       dockerfile: "docker-registry.default.svc:5000/573d-jenkins/jenkins-agent-appdev:latest"
     strategy:
       type: "JenkinsPipeline"
       jenkinsPipelineStrategy:
         jenkinsfilePath: Jenkinsfile
+        env:
+          - name: "GUID"
+            value: "573d"
+          - name: "REPO"
+            value: "https://github.com/Gabriela-Phillips/tasks.git"
+          - name: "CLUSTER"
+            value: "na311.openshift.opentlc.com"
 kind: List
 metadata: []" | oc create -f - -n ${GUID}-jenkins
 
