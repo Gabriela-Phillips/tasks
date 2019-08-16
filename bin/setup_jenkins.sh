@@ -41,7 +41,7 @@ items:
 - kind: "BuildConfig"
   apiVersion: "v1"
   metadata:
-    name: "tasks-pipeline"
+    name: "tasks-pipe"
   spec:
     source:
       type: "Git"
