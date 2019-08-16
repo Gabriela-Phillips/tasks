@@ -49,7 +49,7 @@ items:
         uri: "https://github.com/Gabriela-Phillips/tasks.git"
         ref: "master"
       contextDir: "tasks/openshift-tasks/"
-      dockerfile: "docker-registry.default.svc:5000/GUID-jenkins/jenkins-agent-appdev:latest"
+      dockerfile: "docker-registry.default.svc:5000/573d-jenkins/jenkins-agent-appdev:latest"
     strategy:
       type: "JenkinsPipeline"
       jenkinsPipelineStrategy:
