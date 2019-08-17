@@ -64,6 +64,8 @@ kind: List
 metadata: []" | oc create -f - -n ${GUID}-jenkins
 
 
+oc new-build bc jenkins-pipeline
+
 # Make sure that Jenkins is fully up and running before proceeding!
 while : ; do
   echo "Checking if Jenkins is Ready..."
