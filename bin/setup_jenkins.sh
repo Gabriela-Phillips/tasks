@@ -30,9 +30,9 @@ oc set resources dc jenkins --limits=memory=2Gi,cpu=2 --requests=memory=1Gi,cpu=
 
 # Create custom agent container image with skopeo
 echo "build from Skopeo"
-oc new-build -D $'FROM docker-registry.default.svc:5000/gpte-jenkins/jenkins-agent-appdev\n
+oc new-build -D $'FROM docker.io/openshift/jenkins-agent-maven-35-centos7:v3.11\n
       USER root\nRUN yum -y install skopeo && yum clean all\n
-      USER 1001' --name=jenkins-agent-appdev -n ${GUID}-jenkins
+      USER 1001' --name=jenkins-agent-appdev
 
 echo "Get IS"
 oc get is
