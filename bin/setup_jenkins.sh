@@ -34,7 +34,10 @@ oc new-build -D $'FROM docker.io/openshift/jenkins-agent-maven-35-centos7:v3.11\
       USER root\nRUN yum -y install skopeo && yum clean all\n
       USER 1001' --context-dir=/openshift-tasks --name=jenkins-agent-appdev -n ${GUID}-jenkins
 
+echo "Get IS"
 oc get is
+echo "Get Logs"
+oc logs -f bc/jenkins-agent-appdev
 
 # Create pipeline build config pointing to the ${REPO} with contextDir `openshift-tasks`
 
