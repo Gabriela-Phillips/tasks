@@ -32,7 +32,7 @@ oc set resources dc jenkins --limits=memory=2Gi,cpu=2 --requests=memory=1Gi,cpu=
 echo "build from Skopeo"
 oc new-build -D $'FROM docker.io/openshift/jenkins-agent-maven-35-centos7:v3.11\n
       USER root\nRUN yum -y install skopeo && yum clean all\n
-      USER 1001' --name=jenkins-agent-appdev
+      USER 1001' --name=jenkins-agent-appdev --namespace=${GUID}-jenkins
 
 echo "Get IS"
 oc get is
