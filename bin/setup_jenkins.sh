@@ -56,7 +56,7 @@ items:
     strategy:
       type: Docker
     triggers:
-    - type: ConfigChange" | oc create -f - -n ${GUID}-jenkins
+    - type: ConfigChange" | oc create -f -
 oc status
 echo "Get IS"
 oc get is
@@ -90,7 +90,7 @@ items:
           - name: "CLUSTER"
             value: "na311.openshift.opentlc.com"
 kind: List
-metadata: []" | oc create -f - -n ${GUID}-jenkins
+metadata: []" | oc create -f -
 
 # Make sure that Jenkins is fully up and running before proceeding!
 while : ; do
