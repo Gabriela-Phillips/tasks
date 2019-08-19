@@ -17,7 +17,6 @@ echo "Setting up Jenkins in project ${GUID}-jenkins from Git Repo ${REPO} for Cl
 # Set up Jenkins with sufficient resources
 # 1 -- set up Jenkins instance
 
-oc get project ${GUID}-jenkins
 echo "var Set"
 oc set env bc --all GUID=573d
 oc set env bc --all REPO=https://github.com/Gabriela-Phillips/tasks/openshift-tasks.git
@@ -55,7 +54,7 @@ items:
     strategy:
       type: "Docker"
     triggers:
-    - type: ConfigChange" | oc create -f - 
+    - type: ConfigChange" | oc create -f - -n ${GUID}-jenkins-prod
     
 oc status
 echo "Get IS"
@@ -90,7 +89,7 @@ items:
           - name: "CLUSTER"
             value: "na311.openshift.opentlc.com"
 kind: List
-metadata: []" | oc create -f -
+metadata: []" | oc create -f - -n ${GUID}-jenkins-prod
 
 # Make sure that Jenkins is fully up and running before proceeding!
 while : ; do
