@@ -30,23 +30,23 @@ oc set resources dc jenkins --limits=memory=2Gi,cpu=2 --requests=memory=1Gi,cpu=
 
 # Create custom agent container image with skopeo
 echo "apiVersion: v1
-kind: List
+kind: "List"
 items:
-- apiVersion: v1
-  kind: ImageStream
+- apiVersion: "v1"
+  kind: "ImageStream"
   metadata:
-    name: jenkins-agent-appdev
+    name: "jenkins-agent-appdev"
   spec:
-- apiVersion: v1
-  kind: BuildConfig
+- apiVersion: "v1"
+  kind: "BuildConfig"
   metadata:
     labels:
-      name: jenkins-agent-appdev 
+      name: "jenkins-agent-appdev"
   spec:
     output:
       to:
-        kind: ImageStreamTag
-        name: jenkins-agent-appdev:latest
+        kind: "ImageStreamTag"
+        name: "jenkins-agent-appdev:latest"
     source:
       dockerfile: |
         FROM openshift/jenkins-agent-maven-35-centos7:v3.11/
@@ -54,9 +54,10 @@ items:
         RUN yum -y install skopeo apb && yum clean all
         USER 1001
     strategy:
-      type: Docker
+      type: "Docker"
     triggers:
-    - type: ConfigChange" | oc create -f -
+    - type: ConfigChange" | oc create -f - 
+    
 oc status
 echo "Get IS"
 oc get is
