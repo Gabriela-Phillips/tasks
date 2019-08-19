@@ -40,8 +40,7 @@ items:
 - apiVersion: "v1"
   kind: "BuildConfig"
   metadata:
-    labels:
-      name: "jenkins-agent-appdev"
+    name: "jenkins-agent-appdev"
   spec:
     output:
       to:
