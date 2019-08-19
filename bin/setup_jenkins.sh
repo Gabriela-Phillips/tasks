@@ -29,10 +29,34 @@ oc new-app jenkins-persistent --param ENABLE_OAUTH=true --param MEMORY_LIMIT=4Gi
 oc set resources dc jenkins --limits=memory=2Gi,cpu=2 --requests=memory=1Gi,cpu=500m
 
 # Create custom agent container image with skopeo
-echo "build from Skopeo"
-oc new-build -D $'FROM docker.io/openshift/jenkins-agent-maven-35-centos7:v3.11\n
-      USER root\nRUN yum -y install skopeo && yum clean all\n
-      USER 1001' --name=jenkins-agent-appdev --namespace=${GUID}-jenkins
+echo "apiVersion: v1
+kind: List
+items:
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    name: jenkins-agent-appdev
+  spec:
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    labels:
+      name: jenkins-agent-appdev 
+  spec:
+    output:
+      to:
+        kind: ImageStreamTag
+        name: jenkins-agent-appdev:latest
+    source:
+      dockerfile: |
+        FROM openshift/jenkins-agent-maven-35-centos7:v3.11/
+        USER root
+        RUN yum -y install skopeo apb && yum clean all
+        USER 1001
+    strategy:
+      type: Docker
+    triggers:
+    - type: ConfigChange" | oc create -f -
 
 echo "Get IS"
 oc get is
