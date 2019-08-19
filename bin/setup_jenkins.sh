@@ -56,8 +56,8 @@ items:
     strategy:
       type: Docker
     triggers:
-    - type: ConfigChange" | oc create -f -
-
+    - type: ConfigChange" | oc create -f - -n ${GUID}-jenkins
+oc status
 echo "Get IS"
 oc get is
 echo "Get Logs"
