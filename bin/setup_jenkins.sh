@@ -23,10 +23,12 @@ oc set env bc --all REPO=https://github.com/Gabriela-Phillips/tasks/openshift-ta
 oc set env bc --all CLUSTER=na311.openshift.opentlc.com
 echo "Project Retrieved"
 
-oc new-app jenkins-persistent --param ENABLE_OAUTH=true --param MEMORY_LIMIT=4Gi --param VOLUME_CAPACITY=8Gi --param DISABLE_ADMINISTRATIVE_MONITORS=true --name='jenkins'
+oc new-app jenkins-persistent --param ENABLE_OAUTH=true --param MEMORY_LIMIT=4Gi --param VOLUME_CAPACITY=8Gi --param DISABLE_ADMINISTRATIVE_MONITORS=true --name='jenkins' --namespace='${GUID}-jenkins'
 
 oc set resources dc jenkins --limits=memory=2Gi,cpu=2 --requests=memory=1Gi,cpu=500m
 
+echo "Jenkins Created In SH Script"
+echo "\\*****************//"
 # Create custom agent container image with skopeo
 echo "apiVersion: v1
 kind: "List"
@@ -54,13 +56,10 @@ items:
     strategy:
       type: "Docker"
     triggers:
-    - type: ConfigChange" | oc create -f -
-    
-oc status
-echo "Get IS"
-oc get is
-echo "Get Logs"
-oc logs -f bc/jenkins-agent-appdev
+    - type: ConfigChange" | oc create -f - -n ${GUID}-jenkins
+
+echo "Maven Created in SH script"
+echo "\\*****************//"
 
 oc get project 
 oc get pods
@@ -91,7 +90,11 @@ items:
           - name: "CLUSTER"
             value: "na311.openshift.opentlc.com"
 kind: List
-metadata: []" | oc create -f - 
+metadata: []" | oc create -f - -n ${GUID}-jenkins
+
+echo "Pipeline Config Built in SH Script"
+echo "\\*****************//"
+
 oc get project
 oc get pods
 # Make sure that Jenkins is fully up and running before proceeding!
