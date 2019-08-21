@@ -55,6 +55,14 @@ items:
         USER 1001
     strategy:
       type: "Docker"
+      dockerStrategy:
+        env:
+          - name: "GUID"
+            value: "573d"
+          - name: "REPO"
+            value: "https://github.com/Gabriela-Phillips/tasks.git"
+          - name: "CLUSTER"
+            value: "na311.openshift.opentlc.com"
     triggers:
     - type: ConfigChange" | oc create -f - -n ${GUID}-jenkins
 
