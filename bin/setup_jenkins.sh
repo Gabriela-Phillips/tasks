@@ -23,7 +23,7 @@ oc set env bc --all REPO=https://github.com/Gabriela-Phillips/tasks/openshift-ta
 oc set env bc --all CLUSTER=na311.openshift.opentlc.com
 echo "Project Retrieved"
 
-oc new-app jenkins-persistent --param ENABLE_OAUTH=true --param MEMORY_LIMIT=4Gi --param VOLUME_CAPACITY=8Gi --param DISABLE_ADMINISTRATIVE_MONITORS=true --name='jenkins' --namespace='${GUID}-jenkins'
+oc new-app jenkins-persistent --param ENABLE_OAUTH=true --param MEMORY_LIMIT=4Gi --param VOLUME_CAPACITY=8Gi --param DISABLE_ADMINISTRATIVE_MONITORS=true --name='jenkins'
 
 oc set resources dc jenkins --limits=memory=2Gi,cpu=2 --requests=memory=1Gi,cpu=500m
 
