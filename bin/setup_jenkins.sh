@@ -74,7 +74,7 @@ items:
     source:
       type: "Git"
       git:
-        uri: "${REPO}"
+        uri: "https://github.com/Gabriela-Phillips/tasks.git"
         ref: "master"
       contextDir: "/openshift-tasks"
     strategy:
