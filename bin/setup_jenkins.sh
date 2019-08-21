@@ -69,8 +69,6 @@ items:
 echo "Maven Created in SH script"
 echo "\\*****************//"
 
-oc get project 
-oc get pods
 # Create pipeline build config pointing to the ${REPO} with contextDir `openshift-tasks`
 
 echo "apiVersion: v1
@@ -98,8 +96,6 @@ items:
             value: "na311.openshift.opentlc.com"
 kind: List
 metadata: []" | oc create -f - -n ${GUID}-jenkins
-
-oc get bc -n 
 
 echo "Pipeline Config Built in SH Script"
 echo "\\*****************//"
