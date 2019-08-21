@@ -92,6 +92,8 @@ items:
 kind: List
 metadata: []" | oc create -f - -n ${GUID}-jenkins
 
+oc get bc -n 
+
 echo "Pipeline Config Built in SH Script"
 echo "\\*****************//"
 
@@ -110,5 +112,3 @@ while : ; do
   echo "${AVAILABLE_REPLICAS}"
   sleep 10
 done
-
-oc start-build tasks-pipeline --follow
