@@ -110,3 +110,5 @@ while : ; do
   echo "${AVAILABLE_REPLICAS}"
   sleep 10
 done
+
+oc start-build tasks-pipeline --follow
