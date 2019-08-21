@@ -77,7 +77,7 @@ items:
       git:
         uri: "https://github.com/Gabriela-Phillips/tasks.git"
         ref: "master"
-      contextDir: "tasks/openshift-tasks"
+      contextDir: "Gabriela-Phillips/tasks/openshift-tasks"
     strategy:
       type: "JenkinsPipeline"
       jenkinsPipelineStrategy:
