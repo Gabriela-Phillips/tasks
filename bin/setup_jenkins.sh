@@ -54,7 +54,7 @@ items:
     strategy:
       type: "Docker"
     triggers:
-    - type: ConfigChange" | oc create -f - -n ${GUID}-jenkins-prod
+    - type: ConfigChange" | oc create -f -
     
 oc status
 echo "Get IS"
@@ -62,6 +62,8 @@ oc get is
 echo "Get Logs"
 oc logs -f bc/jenkins-agent-appdev
 
+oc get project 
+oc get pods
 # Create pipeline build config pointing to the ${REPO} with contextDir `openshift-tasks`
 
 echo "apiVersion: v1
@@ -89,8 +91,9 @@ items:
           - name: "CLUSTER"
             value: "na311.openshift.opentlc.com"
 kind: List
-metadata: []" | oc create -f - -n ${GUID}-jenkins-prod
-
+metadata: []" | oc create -f - 
+oc get project
+oc get pods
 # Make sure that Jenkins is fully up and running before proceeding!
 while : ; do
   echo "Checking if Jenkins is Ready..."
