@@ -30,8 +30,7 @@ oc set resources dc jenkins --limits=memory=2Gi,cpu=2 --requests=memory=1Gi,cpu=
 echo "Jenkins Created In SH Script"
 echo "\\*****************//"
 # Create custom agent container image with skopeo
-echo "apiVersion: "v1"
-  kind: "BuildConfig"
+echo "kind: "BuildConfig"
   metadata:
     name: "jenkins-agent-appdev"
   spec:
