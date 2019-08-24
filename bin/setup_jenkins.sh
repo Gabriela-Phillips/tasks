@@ -33,9 +33,9 @@ echo "\\*****************//"
 echo "
 apiVersion: v1
 kind: 'BuildConfig'
-  metadata:
+metadata:
     name: 'jenkins-agent-appdev'
-  spec:
+spec:
     source:
       dockerfile: |
         FROM openshift/jenkins-agent-maven-35-centos7:3.11
@@ -51,7 +51,11 @@ kind: 'BuildConfig'
           - name: 'REPO'
             value: 'https://github.com/Gabriela-Phillips/tasks.git'
           - name: 'CLUSTER'
-            value: 'na311.openshift.opentlc.com'" | oc create -f - -n ${GUID}-jenkins
+            value: 'na311.openshift.opentlc.com'
+    output:
+        to:
+            kind: 'ImageStreamTag'
+            name: 'jenkins-agent-appdev:latest'"| oc create -f - -n ${GUID}-jenkins
 
 echo "Maven Created in SH script"
 echo "\\*****************//"
