@@ -84,9 +84,7 @@ items:
 kind: List
 metadata: []" | oc create -f - -n ${GUID}-jenkins
 
-oc describe bc tasks-pipeline
-
-oc start-build tasks-pipeline
+oc describe bc tasks-pipeline -n ${GUID}-jenkins
 
 echo "Pipeline Config Built in SH Script"
 echo "\\*****************//"
