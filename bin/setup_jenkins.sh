@@ -49,7 +49,7 @@ items:
         name: "jenkins-agent-appdev:latest"
     source:
       dockerfile: |
-        FROM openshift/jenkins-agent-maven-35-centos7
+        FROM openshift/jenkins-agent-maven-35-centos7:3.11
         USER root
         RUN yum -y install skopeo apb && yum clean all
         USER 1001
