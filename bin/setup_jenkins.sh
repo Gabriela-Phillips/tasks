@@ -30,23 +30,11 @@ oc set resources dc jenkins --limits=memory=2Gi,cpu=2 --requests=memory=1Gi,cpu=
 echo "Jenkins Created In SH Script"
 echo "\\*****************//"
 # Create custom agent container image with skopeo
-echo "apiVersion: v1
-kind: "List"
-items:
-- apiVersion: "v1"
-  kind: "ImageStream"
-  metadata:
-    name: "jenkins-agent-appdev"
-  spec:
-- apiVersion: "v1"
+echo "apiVersion: "v1"
   kind: "BuildConfig"
   metadata:
     name: "jenkins-agent-appdev"
   spec:
-    output:
-      to:
-        kind: "ImageStreamTag"
-        name: "jenkins-agent-appdev:latest"
     source:
       dockerfile: |
         FROM openshift/jenkins-agent-maven-35-centos7:3.11
@@ -62,9 +50,7 @@ items:
           - name: "REPO"
             value: "https://github.com/Gabriela-Phillips/tasks.git"
           - name: "CLUSTER"
-            value: "na311.openshift.opentlc.com"
-    triggers:
-    - type: ConfigChange" | oc create -f - -n ${GUID}-jenkins
+            value: "na311.openshift.opentlc.com"" | oc create -f - -n ${GUID}-jenkins
 
 echo "Maven Created in SH script"
 echo "\\*****************//"
