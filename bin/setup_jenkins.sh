@@ -30,9 +30,9 @@ oc set resources dc jenkins --limits=memory=2Gi,cpu=2 --requests=memory=1Gi,cpu=
 echo "Jenkins Created In SH Script"
 echo "\\*****************//"
 # Create custom agent container image with skopeo
-echo "kind: "BuildConfig"
+echo "kind: 'BuildConfig'
   metadata:
-    name: "jenkins-agent-appdev"
+    name: 'jenkins-agent-appdev'
   spec:
     source:
       dockerfile: |
@@ -41,15 +41,15 @@ echo "kind: "BuildConfig"
         RUN yum -y install skopeo apb && yum clean all
         USER 1001
     strategy:
-      type: "Docker"
+      type: 'Docker'
       dockerStrategy:
         env:
-          - name: "GUID"
-            value: "f24b"
-          - name: "REPO"
-            value: "https://github.com/Gabriela-Phillips/tasks.git"
-          - name: "CLUSTER"
-            value: "na311.openshift.opentlc.com"" | oc create -f - -n ${GUID}-jenkins
+          - name: 'GUID'
+            value: 'f24b'
+          - name: 'REPO'
+            value: 'https://github.com/Gabriela-Phillips/tasks.git'
+          - name: 'CLUSTER'
+            value: 'na311.openshift.opentlc.com'" | oc create -f - -n ${GUID}-jenkins
 
 echo "Maven Created in SH script"
 echo "\\*****************//"
@@ -58,29 +58,33 @@ echo "\\*****************//"
 
 echo "apiVersion: v1
 items:
-- kind: "BuildConfig"
-  apiVersion: "v1"
+- kind: 'BuildConfig'
+  apiVersion: 'v1'
   metadata:
-    name: "tasks-pipeline"
+    name: 'tasks-pipeline'
   spec:
     source:
-      type: "Git"
+      type: 'Git'
       git:
-        uri: "https://github.com/Gabriela-Phillips/tasks.git"
-      contextDir: "openshift-tasks"
+        uri: 'https://github.com/Gabriela-Phillips/tasks.git'
+      contextDir: 'openshift-tasks'
     strategy:
-      type: "JenkinsPipeline"
+      type: 'JenkinsPipeline'
       jenkinsPipelineStrategy:
         jenkinsfilePath: Jenkinsfile
         env:
-          - name: "GUID"
-            value: "f24b"
-          - name: "REPO"
-            value: "https://github.com/Gabriela-Phillips/tasks.git"
-          - name: "CLUSTER"
-            value: "na311.openshift.opentlc.com"
+          - name: 'GUID'
+            value: 'f24b'
+          - name: 'REPO'
+            value: 'https://github.com/Gabriela-Phillips/tasks.git'
+          - name: 'CLUSTER'
+            value: 'na311.openshift.opentlc.com'
 kind: List
 metadata: []" | oc create -f - -n ${GUID}-jenkins
+
+oc describe bc tasks-pipeline
+
+oc start-build tasks-pipeline
 
 echo "Pipeline Config Built in SH Script"
 echo "\\*****************//"
