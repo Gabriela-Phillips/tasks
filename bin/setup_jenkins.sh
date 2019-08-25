@@ -86,18 +86,19 @@ items:
           - name: 'CLUSTER'
             value: 'na311.openshift.opentlc.com'
 kind: List
-metadata: []" | oc create -f -
+metadata: []" | oc create -f - -n ${GUID}-jenkins
 
 oc get bc
 oc get bc -n ${GUID}-jenkins
 oc describe bc tasks-pipeline
 oc describe bc tasks-pipeline -n ${GUID}-jenkins
 
+echo "_____ BUILD STARTS HERE ______"
+oc start-build tasks-pipeline -n ${GUID}-jenkins
+
 echo "Pipeline Config Built in SH Script"
 echo "\\*****************//"
 
-oc get project
-oc get pods
 # Make sure that Jenkins is fully up and running before proceeding!
 while : ; do
   echo "Checking if Jenkins is Ready..."
