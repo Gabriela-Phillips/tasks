@@ -35,6 +35,7 @@ apiVersion: v1
 kind: 'BuildConfig'
 metadata:
     name: 'jenkins-agent-appdev'
+    label: 'skopeo-pod'
 spec:
     source:
       dockerfile: |
@@ -87,14 +88,6 @@ items:
             value: 'na311.openshift.opentlc.com'
 kind: List
 metadata: []" | oc create -f - -n ${GUID}-jenkins
-
-oc get bc
-oc get bc -n ${GUID}-jenkins
-oc describe bc tasks-pipeline
-oc describe bc tasks-pipeline -n ${GUID}-jenkins
-
-echo "_____ BUILD STARTS HERE ______"
-oc start-build tasks-pipeline -n ${GUID}-jenkins
 
 echo "Pipeline Config Built in SH Script"
 echo "\\*****************//"
