@@ -55,7 +55,7 @@ spec:
     output:
         to:
             kind: 'ImageStreamTag'
-            name: 'jenkins-agent-appdev:latest'"| oc create -f - -n ${GUID}-jenkins
+            name: 'jenkins-agent-appdev:latest'"| oc create -f -
 
 echo "Maven Created in SH script"
 echo "\\*****************//"
@@ -86,8 +86,11 @@ items:
           - name: 'CLUSTER'
             value: 'na311.openshift.opentlc.com'
 kind: List
-metadata: []" | oc create -f - -n ${GUID}-jenkins
+metadata: []" | oc create -f -
 
+oc get bc
+oc get bc -n ${GUID}-jenkins
+oc describe bc tasks-pipeline
 oc describe bc tasks-pipeline -n ${GUID}-jenkins
 
 echo "Pipeline Config Built in SH Script"
