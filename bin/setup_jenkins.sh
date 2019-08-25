@@ -55,7 +55,7 @@ spec:
     output:
         to:
             kind: 'ImageStreamTag'
-            name: 'jenkins-agent-appdev:latest'"| oc create -f -
+            name: 'jenkins-agent-appdev:latest'"| oc create -f - -n ${GUID}-jenkins
 
 echo "Maven Created in SH script"
 echo "\\*****************//"
