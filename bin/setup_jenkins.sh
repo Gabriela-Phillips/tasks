@@ -35,8 +35,6 @@ apiVersion: v1
 kind: 'BuildConfig'
 metadata:
     name: 'jenkins-agent-appdev'
-    labels:
-        build=jenkins-agent-appdev
 spec:
     nodeName: skopeo-pod
     source:
