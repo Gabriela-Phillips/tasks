@@ -24,6 +24,7 @@ oc set env bc --all CLUSTER=na311.openshift.opentlc.com
 echo "Project Retrieved"
 
 oc new-app jenkins-persistent --param ENABLE_OAUTH=true --param MEMORY_LIMIT=4Gi --param VOLUME_CAPACITY=8Gi --param DISABLE_ADMINISTRATIVE_MONITORS=true --name='jenkins'
+-l name='skopeo-pod'
 
 oc set resources dc jenkins --limits=memory=2Gi,cpu=2 --requests=memory=1Gi,cpu=500m
 
@@ -37,8 +38,6 @@ metadata:
     name: 'jenkins-agent-appdev'
     labels: 'skopeo-pod'
 spec:
-    nodeSelector:
-    key1: 'skopeo-pod'
     source:
       dockerfile: |
         FROM openshift/jenkins-agent-maven-35-centos7:3.11
