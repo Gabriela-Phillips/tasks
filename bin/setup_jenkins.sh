@@ -35,7 +35,7 @@ apiVersion: v1
 kind: 'BuildConfig'
 metadata:
     name: 'jenkins-agent-appdev'
-    labels: 'skopeo-pod'
+    labels: 'role'='jenkins-slave'
 spec:
     source:
       dockerfile: |
