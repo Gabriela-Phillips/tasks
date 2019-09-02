@@ -55,8 +55,8 @@ spec:
             value: 'na311.openshift.opentlc.com'
     output:
         to:
-            kind: 'ImageStreamTag'
-            name: 'jenkins-agent-appdev:latest'"| oc create -f - -n ${GUID}-jenkins
+            kind: 'DockerImage'
+            name: 'docker-registry.default.svc:5000/${GUID}-jenkins/jenkins-agent-appdev'"| oc create -f - -n ${GUID}-jenkins
 
 echo "Maven Created in SH script"
 echo "\\*****************//"
