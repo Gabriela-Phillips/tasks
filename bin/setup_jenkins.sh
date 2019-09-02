@@ -37,6 +37,8 @@ metadata:
     name: 'jenkins-agent-appdev'
     labels: 'skopeo-pod'
 spec:
+    nodeSelector:
+    key1: 'skopeo-pod'
     source:
       dockerfile: |
         FROM openshift/jenkins-agent-maven-35-centos7:3.11
