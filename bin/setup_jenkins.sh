@@ -38,7 +38,7 @@ metadata:
 spec:
     source:
       dockerfile: |
-        FROM openshift/jenkins-agent-maven-35-centos7:3.11
+        FROM docker.io/openshift/jenkins-agent-maven-35-centos7:v3.11
         USER root
         RUN yum -y install skopeo apb && yum clean all
         USER 1001
