@@ -8,7 +8,7 @@ if [ "$#" -ne 3 ]; then
     exit 1
 fi
 
-GUID=a73f
+GUID=8d75
 REPO=https://github.com/Gabriela-Phillips/tasks.git
 CLUSTER=na311.openshift.opentlc.com
 
@@ -18,7 +18,7 @@ echo "Setting up Jenkins in project ${GUID}-jenkins from Git Repo ${REPO} for Cl
 # 1 -- set up Jenkins instance
 
 echo "var Set"
-oc set env bc --all GUID=a73f
+oc set env bc --all GUID=8d75
 oc set env bc --all REPO=https://github.com/Gabriela-Phillips/tasks.git
 oc set env bc --all CLUSTER=na311.openshift.opentlc.com
 echo "Project Retrieved"
@@ -48,7 +48,7 @@ spec:
 	    dockerStrategy:
 	        env:
                   - name: 'GUID'
-                    value: 'a73f'
+                    value: '8d75'
                   - name: 'REPO'
                     value: 'https://github.com/Gabriela-Phillips/tasks.git'
                   - name: 'CLUSTER'
@@ -72,7 +72,7 @@ spec:
         jenkinsPipelineStrategy:
 	    jenkinsfile: 'tasks/openshift-tasks/'
 	type: JenkinsPipeline" | oc create -f - -n ${GUID}-jenkins
-oc set env bc --all GUID=a73f
+oc set env bc --all GUID=8d75
 oc set env bc --all REPO=https://github.com/Gabriela-Phillips/tasks.git
 oc set env bc --all CLUSTER=na311.openshift.opentlc.com
 
