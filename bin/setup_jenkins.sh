@@ -49,9 +49,9 @@ spec:
 		jenkinsPipelineStrategy:
 			jenkinsfile: 'tasks/openshift-tasks/'
 		type: JenkinsPipeline" | oc create -f - -n ${GUID}-jenkins
-oc set env bc tasks-pipeline GUID=a73f
-oc set env bc tasks-pipeline REPO=https://github.com/Gabriela-Phillips/tasks.git
-oc set env bc tasks-pipeline CLUSTER=na311.openshift.opentlc.com
+oc set env bc --all GUID=a73f
+oc set env bc --all REPO=https://github.com/Gabriela-Phillips/tasks.git
+oc set env bc --all CLUSTER=na311.openshift.opentlc.com
 
 echo "Pipeline Config Built in SH Script"
 echo "\\*****************//"
