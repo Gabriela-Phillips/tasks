@@ -66,12 +66,15 @@ echo "\\*****************//"
 echo "kind: 'BuildConfig'
 apiVersion: 'v1'
 metadata:
-    name: 'tasks-pipeline'
+  name: 'tasks-pipeline'
 spec:
-    strategy:
-        jenkinsPipelineStrategy:
-	    jenkinsfile: 'tasks/openshift-tasks/'
-	type: JenkinsPipeline" | oc create -f - -n ${GUID}-jenkins
+  source:
+    git:
+      uri: 'https://github.com/Gabriela-Phillips/tasks'
+  strategy:
+    jenkinsPipelineStrategy:
+      jenkinsfilePath:'openshift-tasks'" | oc create -f - -n ${GUID}-jenkins
+      
 oc set env bc --all GUID=8d75
 oc set env bc --all REPO=https://github.com/Gabriela-Phillips/tasks.git
 oc set env bc --all CLUSTER=na311.openshift.opentlc.com
