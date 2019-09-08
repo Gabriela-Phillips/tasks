@@ -37,23 +37,22 @@ kind: 'BuildConfig'
 metadata:
     name: 'jenkins-agent-appdev'
 spec:
-    nodeName: skopeo-pod
     source:
-      dockerfile: |
-        FROM openshift/jenkins-agent-maven-35-centos7:3.11
-        USER root
-        RUN yum -y install skopeo apb && yum clean all
-        USER 1001
-    strategy:
-      type: 'Docker'
-      dockerStrategy:
-        env:
-          - name: 'GUID'
-            value: 'a73f'
-          - name: 'REPO'
-            value: 'https://github.com/Gabriela-Phillips/tasks.git'
-          - name: 'CLUSTER'
-            value: 'na311.openshift.opentlc.com'
+        dockerfile: |
+            FROM openshift/jenkins-agent-maven-35-centos7:3.11
+            USER root
+            RUN yum -y install skopeo apb && yum clean all
+            USER 1001
+	strategy:
+	    type: 'Docker'
+	    dockerStrategy:
+	        env:
+                  - name: 'GUID'
+                    value: 'a73f'
+                  - name: 'REPO'
+                    value: 'https://github.com/Gabriela-Phillips/tasks.git'
+                  - name: 'CLUSTER'
+                     value: 'na311.openshift.opentlc.com'
     output:
         to:
             kind: 'DockerImage'
