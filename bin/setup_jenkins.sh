@@ -63,21 +63,27 @@ echo "\\*****************//"
 
 # Create pipeline build config pointing to the ${REPO} with contextDir `openshift-tasks`
 
-echo "kind: 'BuildConfig'
+echo "
+kind: 'BuildConfig'
 apiVersion: 'v1'
 metadata:
-  name: 'tasks-pipeline'
+    name:'tasks-pipeline'
 spec:
-  source:
-    git:
-      uri: 'https://github.com/Gabriela-Phillips/tasks'
-  strategy:
-    jenkinsPipelineStrategy:
-      jenkinsfilePath:'openshift-tasks'" | oc create -f - -n ${GUID}-jenkins
-      
-oc set env bc --all GUID=8d75
-oc set env bc --all REPO=https://github.com/Gabriela-Phillips/tasks.git
-oc set env bc --all CLUSTER=na311.openshift.opentlc.com
+    source:
+        git:
+            uri: 'https://github.com/Gabriela-Phillips/tasks.git'
+    strategy:
+        jenkinsPipelineStrategy:
+            jenkinsfilePath: '/openshift-tasks'
+        type: JenkinsPipeline
+        sourceStrategy:
+            env:
+                - name: 'GUID'
+                  value: '8d75'
+                - name: 'REPO'
+                  value: 'https://github.com/Gabriela-Phillips/tasks.git'
+                - name: 'CLUSTER'
+                  value: 'na311.openshift.opentlc.com'" | oc create -f - -n ${GUID}-jenkins
 
 echo "Pipeline Config Built in SH Script"
 echo "\\*****************//"
